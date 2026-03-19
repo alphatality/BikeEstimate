@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>README.md</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+html,footer,header{
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Custom MD PDF CSS
+ */
+html,footer,header{
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+
+ }
+body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+<link rel="stylesheet" href="file:///r%3A/2.Travail/1.Enseignement/Cours/_1.Outils/2.Developpement/1.SCSS/main.css" type="text/css"><link rel="stylesheet" href="file:///d%3A/rdaros/Cours/_1.Outils/2.Developpement/1.SCSS/main.css" type="text/css">
+</head>
+
+<body>
+    <h1 id="bike-station-optimizer">Bike Station Optimizer</h1>
+<blockquote>
+<p>Minimize the number of bike-sharing stations in a city while guaranteeing full coverage — applied to Paris.</p>
+</blockquote>
+<p>A research project comparing <strong>4 algorithms</strong> for the optimal placement of bike stations, from a fast greedy heuristic to an exact linear program. Built in Python, tested on real OpenStreetMap data.</p>
+<hr>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#problem-statement">Problem Statement</a></li>
+<li><a href="#approaches">Approaches</a>
+<ul>
+<li><a href="#approach-1--spatial-vorono%C3%AF">Approach 1 — Spatial (Voronoï)</a></li>
+<li><a href="#approach-2--graph-based">Approach 2 — Graph-based</a></li>
+</ul>
+</li>
+<li><a href="#results">Results</a></li>
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#project-structure">Project Structure</a></li>
+<li><a href="#possible-improvements">Possible Improvements</a></li>
+</ul>
+<hr>
+<h2 id="problem-statement">Problem Statement</h2>
+<p>The goal is to place bike stations across a city such that:</p>
+<ul>
+<li><strong>Every point in the city is within a reasonable walking distance of a station</strong> (300–400 m)</li>
+<li><strong>The total number of stations is minimized</strong></li>
+</ul>
+<p>Two representations of the city are used:</p>
+<table>
+<thead>
+<tr>
+<th>Representation</th>
+<th>Zone modeled as</th>
+<th>Stations modeled as</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Spatial</strong></td>
+<td>A polygon (city boundary)</td>
+<td>Points inside the polygon</td>
+</tr>
+<tr>
+<td><strong>Graph</strong></td>
+<td>G = (V, E) — intersections and roads</td>
+<td>Vertices of the graph</td>
+</tr>
+</tbody>
+</table>
+<p>The graph-based approach is more realistic: distances follow actual streets rather than straight lines. Real-world walking distances are typically <strong>~25% longer</strong> than as-the-crow-flies distances.</p>
+<hr>
+<h2 id="approaches">Approaches</h2>
+<h3 id="approach-1--spatial-vorono%C3%AF">Approach 1 — Spatial (Voronoï)</h3>
+<p>Uses iterative <strong>Voronoï diagrams</strong> (Lloyd's algorithm) to partition the city into cells, each served by one station.</p>
+<p><strong>Algorithm:</strong></p>
+<pre class="hljs"><code><div>points = random_points(n, city_boundary)
+repeat until centroids stop moving:
+    polygons = voronoi_diagram(points)
+    for each polygon:
+        points[i] = centroid(polygon[i])  # or polylabel if centroid is outside
+return points, polygons
+</div></code></pre>
+<p><strong>Key detail:</strong> Standard Lloyd's algorithm only works on convex polygons (centroids may fall outside concave cells). The fix is to replace out-of-polygon centroids with the <strong>pole of inaccessibility</strong> (center of the largest inscribed circle).</p>
+<p>The number of stations is found by <strong>binary search</strong> on cell size, targeting a radius of <code>dist / 1.25</code> to account for the detour factor.</p>
+<p><strong>Initial estimate:</strong></p>
+<pre class="hljs"><code><div>n ≈ area / (π × distance²)
+</div></code></pre>
+<hr>
+<h3 id="approach-2--graph-based">Approach 2 — Graph-based</h3>
+<p>Three algorithms operate on the road network graph.</p>
+<h4 id="2a-greedy-concentric-bfs">2a. Greedy (concentric BFS)</h4>
+<p>Starting from the city center, the algorithm expands concentrically:</p>
+<ol>
+<li><strong>Find candidate stations</strong> — run a bounded Dijkstra from the current station, collecting all nodes at distance ~2d. These are potential next stations.</li>
+<li><strong>Filter candidates</strong> — from those candidates, pick a subset where each station is at distance ≥ 2d from the others.</li>
+<li><strong>Expand</strong> — repeat from each newly chosen station, never revisiting a node.</li>
+</ol>
+<p>This runs in near-linear time relative to the graph size.</p>
+<h4 id="2b-k-medoids">2b. K-Medoids</h4>
+<p>Requires a <strong>precomputed all-pairs distance matrix</strong> (Dijkstra from every node, O(|V|²)).</p>
+<p>Then runs <code>fasterpam</code> (an optimized k-medoids implementation) with binary search on k to hit the target coverage distance:</p>
+<pre class="hljs"><code><div>repeat:
+    k = (lo + hi) / 2
+    result = fasterpam(distance_matrix, k)
+    coverage = mean(max distance in each cluster)
+    if coverage &gt; target: increase k
+    else: decrease k
+</div></code></pre>
+<h4 id="2c-exact-integer-linear-program">2c. Exact (Integer Linear Program)</h4>
+<p>Formulated as a <strong>set cover</strong> problem and solved with CPLEX:</p>
+<p><strong>Variables:</strong></p>
+<ul>
+<li><code>xᵢ ∈ {0,1}</code> — 1 if a station is placed at node i</li>
+<li><code>yᵢⱼ ∈ {0,1}</code> — 1 if node j is covered by station i</li>
+</ul>
+<p><strong>Objective:</strong> minimize Σ xᵢ</p>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>Every node j must be covered: <code>Σᵢ yᵢⱼ ≥ 1</code> for all j (summing over i with dᵢⱼ ≤ D)</li>
+<li>A node can only cover others if it has a station: <code>yᵢⱼ ≤ xᵢ</code> for all i, j</li>
+</ul>
+<p>This gives the <strong>provably optimal</strong> solution but is computationally intractable for large graphs (&gt;3h for zone 4 onward).</p>
+<hr>
+<h2 id="results">Results</h2>
+<p>Tested on 6 zones of increasing size around Paris:</p>
+<table>
+<thead>
+<tr>
+<th>Zone</th>
+<th>Area</th>
+<th>Nodes</th>
+<th>Edges</th>
+<th>Compute time (graph build)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 — Quartier Saint-Merri</td>
+<td>tiny</td>
+<td>52</td>
+<td>86</td>
+<td>0.00032 s</td>
+</tr>
+<tr>
+<td>2 — Paris 13e</td>
+<td>small</td>
+<td>788</td>
+<td>1 415</td>
+<td>0.14 s</td>
+</tr>
+<tr>
+<td>3 — Paris 13e+14e</td>
+<td>medium</td>
+<td>1 456</td>
+<td>2 617</td>
+<td>0.53 s</td>
+</tr>
+<tr>
+<td>4 — Rive droite</td>
+<td>large</td>
+<td>3 167</td>
+<td>5 821</td>
+<td>3.0 s</td>
+</tr>
+<tr>
+<td>5 — Rive gauche</td>
+<td>large</td>
+<td>6 954</td>
+<td>12 862</td>
+<td>16 s</td>
+</tr>
+<tr>
+<td>6 — Paris (full)</td>
+<td>very large</td>
+<td>10 097</td>
+<td>18 680</td>
+<td>36 s</td>
+</tr>
+</tbody>
+</table>
+<h3 id="execution-time-seconds">Execution time (seconds)</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Zone 1</th>
+<th>Zone 2</th>
+<th>Zone 3</th>
+<th>Zone 4</th>
+<th>Zone 5</th>
+<th>Zone 6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Voronoï</td>
+<td>0.858</td>
+<td>24.6</td>
+<td>113.43</td>
+<td>118.9</td>
+<td>538</td>
+<td>721</td>
+</tr>
+<tr>
+<td><strong>Greedy</strong></td>
+<td><strong>0.013</strong></td>
+<td><strong>0.203</strong></td>
+<td><strong>0.434</strong></td>
+<td><strong>0.731</strong></td>
+<td><strong>0.78</strong></td>
+<td><strong>2.46</strong></td>
+</tr>
+<tr>
+<td>K-medoids</td>
+<td>0.00162</td>
+<td>0.602</td>
+<td>3.98</td>
+<td>15.7</td>
+<td>85.5</td>
+<td>194</td>
+</tr>
+<tr>
+<td>Exact</td>
+<td>0.193</td>
+<td>35.0</td>
+<td>284</td>
+<td>&gt;3h</td>
+<td>✗</td>
+<td>✗</td>
+</tr>
+</tbody>
+</table>
+<h3 id="number-of-stations-placed">Number of stations placed</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Zone 1</th>
+<th>Zone 2</th>
+<th>Zone 3</th>
+<th>Zone 4</th>
+<th>Zone 5</th>
+<th>Zone 6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Voronoï</td>
+<td>3</td>
+<td>53</td>
+<td>92</td>
+<td>218</td>
+<td>555</td>
+<td>768</td>
+</tr>
+<tr>
+<td>Greedy</td>
+<td>4</td>
+<td>62</td>
+<td>102</td>
+<td>244</td>
+<td>630</td>
+<td>891</td>
+</tr>
+<tr>
+<td>K-medoids</td>
+<td>4</td>
+<td>58</td>
+<td>103</td>
+<td>232</td>
+<td>583</td>
+<td>817</td>
+</tr>
+<tr>
+<td><strong>Exact</strong></td>
+<td><strong>3</strong></td>
+<td><strong>38</strong></td>
+<td><strong>67</strong></td>
+<td>✗</td>
+<td>✗</td>
+<td>✗</td>
+</tr>
+</tbody>
+</table>
+<h3 id="mean-coverage-distance-m--target-300-m">Mean coverage distance (m) — target: 300 m</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Zone 1</th>
+<th>Zone 2</th>
+<th>Zone 3</th>
+<th>Zone 4</th>
+<th>Zone 5</th>
+<th>Zone 6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Voronoï</td>
+<td>340</td>
+<td>303</td>
+<td>301</td>
+<td>299</td>
+<td>298</td>
+<td>300</td>
+</tr>
+<tr>
+<td>Greedy</td>
+<td>368</td>
+<td>301</td>
+<td>338</td>
+<td>317</td>
+<td>300</td>
+<td>297</td>
+</tr>
+<tr>
+<td>K-medoids</td>
+<td>299</td>
+<td>303</td>
+<td>301</td>
+<td>297</td>
+<td>299</td>
+<td>296</td>
+</tr>
+<tr>
+<td>Exact</td>
+<td>331</td>
+<td>375</td>
+<td>376</td>
+<td>✗</td>
+<td>✗</td>
+<td>✗</td>
+</tr>
+</tbody>
+</table>
+<h3 id="standard-deviation-of-coverage-distance-m--lower--more-uniform">Standard deviation of coverage distance (m) — lower = more uniform</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Zone 1</th>
+<th>Zone 2</th>
+<th>Zone 3</th>
+<th>Zone 4</th>
+<th>Zone 5</th>
+<th>Zone 6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Voronoï</td>
+<td>423</td>
+<td>39</td>
+<td>30</td>
+<td>39</td>
+<td>125</td>
+<td>73</td>
+</tr>
+<tr>
+<td>Greedy</td>
+<td>121</td>
+<td>94</td>
+<td>82</td>
+<td>87</td>
+<td>118</td>
+<td>110</td>
+</tr>
+<tr>
+<td>K-medoids</td>
+<td>133</td>
+<td>67</td>
+<td>67</td>
+<td>72</td>
+<td>86</td>
+<td>82</td>
+</tr>
+<tr>
+<td><strong>Exact</strong></td>
+<td><strong>15</strong></td>
+<td><strong>23</strong></td>
+<td><strong>21</strong></td>
+<td>✗</td>
+<td>✗</td>
+<td>✗</td>
+</tr>
+</tbody>
+</table>
+<h3 id="proportion-of-nodes-within-acceptable-distance">Proportion of nodes within acceptable distance</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Zone 1</th>
+<th>Zone 2</th>
+<th>Zone 3</th>
+<th>Zone 4</th>
+<th>Zone 5</th>
+<th>Zone 6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Voronoï</td>
+<td>0.966</td>
+<td>0.994</td>
+<td>0.994</td>
+<td>0.995</td>
+<td>0.996</td>
+<td>0.997</td>
+</tr>
+<tr>
+<td>Greedy</td>
+<td>0.942</td>
+<td>0.998</td>
+<td>0.979</td>
+<td>0.988</td>
+<td>0.989</td>
+<td>0.984</td>
+</tr>
+<tr>
+<td>K-medoids</td>
+<td>0.980</td>
+<td>0.991</td>
+<td>0.992</td>
+<td>0.993</td>
+<td>0.995</td>
+<td>0.992</td>
+</tr>
+<tr>
+<td><strong>Exact</strong></td>
+<td><strong>1.0</strong></td>
+<td><strong>1.0</strong></td>
+<td><strong>1.0</strong></td>
+<td>✗</td>
+<td>✗</td>
+<td>✗</td>
+</tr>
+</tbody>
+</table>
+<h3 id="summary">Summary</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Speed</th>
+<th>Station count</th>
+<th>Coverage uniformity</th>
+<th>Scalability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Voronoï</td>
+<td>Slow</td>
+<td>Good</td>
+<td>Variable</td>
+<td>Good</td>
+</tr>
+<tr>
+<td>Greedy</td>
+<td><strong>Very fast</strong></td>
+<td>Acceptable</td>
+<td>Acceptable</td>
+<td><strong>Excellent</strong></td>
+</tr>
+<tr>
+<td>K-medoids</td>
+<td>Moderate</td>
+<td>Good</td>
+<td>Good</td>
+<td>Moderate</td>
+</tr>
+<tr>
+<td>Exact</td>
+<td>Very slow</td>
+<td><strong>Optimal</strong></td>
+<td><strong>Excellent</strong></td>
+<td>Poor</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Takeaway:</strong> For city-scale deployment, the <strong>greedy</strong> method offers the best speed/quality tradeoff. <strong>K-medoids</strong> gives better coverage uniformity at the cost of requiring a full distance matrix. The <strong>exact</strong> method is only feasible for small neighborhoods but provides a useful lower bound.</p>
+<hr>
+<h2 id="getting-started">Getting Started</h2>
+<h3 id="prerequisites">Prerequisites</h3>
+<pre class="hljs"><code><div>pip install osmnx networkx igraph shapely numpy matplotlib kmedoids pulp colour
+</div></code></pre>
+<blockquote>
+<p><strong>Note:</strong> The exact solver (<code>optimisation_lineaire</code>) requires <a href="https://www.ibm.com/products/ilog-cplex-optimization-studio">IBM CPLEX</a> (free academic license available). The other three methods have no such requirement.</p>
+</blockquote>
+<h3 id="quick-start">Quick start</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># main.py</span>
+city = <span class="hljs-string">"Paris"</span>          <span class="hljs-comment"># Any city name recognized by OpenStreetMap</span>
+dist = <span class="hljs-number">400</span>              <span class="hljs-comment"># Max acceptable walking distance in meters</span>
+marge = <span class="hljs-number">200</span>             <span class="hljs-comment"># Tolerance for greedy method</span>
+methode = <span class="hljs-string">"glouton"</span>     <span class="hljs-comment"># "glouton" | "kmedoids" | "voronoi" | "exact"</span>
+
+main(methode=methode, regenerate=<span class="hljs-literal">True</span>)
+</div></code></pre>
+<p><strong>First run</strong> (<code>regenerate=True</code>) downloads the city graph from OpenStreetMap, processes it, and computes the full distance matrix — this can take several minutes for large cities. Subsequent runs with <code>regenerate=False</code> load cached data instantly.</p>
+<h3 id="step-by-step">Step by step</h3>
+<p><strong>1. Download and prepare the graph</strong></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> get_graph <span class="hljs-keyword">import</span> get_data, treat_graph, save_data
+<span class="hljs-keyword">from</span> utils.plotting_and_string_clean <span class="hljs-keyword">import</span> clean_file_name
+
+city = <span class="hljs-string">"Paris, France"</span>
+crs = <span class="hljs-string">"EPSG:2154"</span>
+file_name = clean_file_name(city)
+
+data = get_data(city, crs)
+save_data(treat_graph(data[<span class="hljs-number">0</span>], crs), data[<span class="hljs-number">1</span>], file_name, generate=<span class="hljs-literal">True</span>)
+</div></code></pre>
+<p><strong>2. Run a method</strong></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> get_graph <span class="hljs-keyword">import</span> load_data
+<span class="hljs-keyword">from</span> glouton_igraph <span class="hljs-keyword">import</span> approx, indice
+<span class="hljs-keyword">import</span> osmnx <span class="hljs-keyword">as</span> ox, networkx <span class="hljs-keyword">as</span> nx
+<span class="hljs-keyword">from</span> shapely.ops <span class="hljs-keyword">import</span> polylabel
+
+data = load_data(file_name, plot=<span class="hljs-literal">True</span>, igraph=<span class="hljs-literal">True</span>, polygone=<span class="hljs-literal">True</span>, matrix=<span class="hljs-literal">True</span>)
+g_plot, h, polygon, mat = data
+
+seed_xy = polylabel(polygon)
+seed = ox.nearest_nodes(nx.MultiDiGraph(g_plot), seed_xy.x, seed_xy.y)
+
+stations = approx(h, seed, dist=<span class="hljs-number">400</span>, tolerance=<span class="hljs-number">200</span>)
+print(<span class="hljs-string">f"<span class="hljs-subst">{len(stations)}</span> stations placed"</span>)
+</div></code></pre>
+<p><strong>3. Evaluate results</strong></p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> utils.stats <span class="hljs-keyword">import</span> cluster, moyenne, ecart_type, correct_dist
+
+clusters = cluster(h, stations, mat)
+moy, maxs = moyenne(clusters, mat, stations)
+
+print(<span class="hljs-string">f"Mean coverage:     <span class="hljs-subst">{moy:<span class="hljs-number">.1</span>f}</span> m"</span>)
+print(<span class="hljs-string">f"Std deviation:     <span class="hljs-subst">{ecart_type(moy, maxs):<span class="hljs-number">.1</span>f}</span> m"</span>)
+print(<span class="hljs-string">f"Coverage ratio:    <span class="hljs-subst">{correct_dist(stations, mat, clusters, <span class="hljs-number">0</span>, <span class="hljs-number">400</span>):<span class="hljs-number">.3</span>f}</span>"</span>)
+</div></code></pre>
+<h3 id="choosing-a-solver">Choosing a solver</h3>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Recommended method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Quick estimate, any city size</td>
+<td><code>glouton</code></td>
+</tr>
+<tr>
+<td>Best coverage uniformity, city ≤ ~7k nodes</td>
+<td><code>kmedoids</code></td>
+</tr>
+<tr>
+<td>Spatial overview without street graph</td>
+<td><code>voronoi</code></td>
+</tr>
+<tr>
+<td>Provably optimal, small area only</td>
+<td><code>exact</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="project-structure">Project Structure</h2>
+<pre class="hljs"><code><div>bike-station-optimizer/
+├── README.md
+├── requirements.txt
+├── main.py                        # Entry point — configure and run here
+├── glouton_igraph.py              # Greedy concentric BFS algorithm
+├── kmedoids.py                    # K-medoids with binary search
+├── voronoi.py                     # Iterative Voronoï / Lloyd's algorithm
+├── optimisation_lineaire.py       # Exact ILP formulation (requires CPLEX)
+├── utils/
+│   ├── plotting_and_string_clean.py   # Visualization + filename utilities
+│   |── stats.py                       # Coverage metrics
+|   ├── get_graph.py                   # OSM download, graph processing, data I/O
+└── data/                          # Generated files (gitignored)
+    ├── graph_&lt;city&gt;_geom.graphml
+    ├── graph_&lt;city&gt;_simple.graphml
+    ├── polygon_&lt;city&gt;.geojson
+    └── matrice_&lt;city&gt;.npy
+</div></code></pre>
+<blockquote>
+<p>The <code>data/</code> folder is not committed to git — it is generated locally on first run. Add it to <code>.gitignore</code>.</p>
+</blockquote>
+<hr>
+<h2 id="possible-improvements">Possible Improvements</h2>
+<p>Several real-world constraints were left out of scope and could be incorporated:</p>
+<ul>
+<li><strong>Station capacity</strong> — not all locations can host the same number of bikes</li>
+<li><strong>Inter-station flow</strong> — high-demand corridors (commutes, tourist areas) warrant denser coverage</li>
+<li><strong>Bike redistribution</strong> — stations that regularly empty or fill up need logistics modelling</li>
+<li><strong>User behavior</strong> — preferred routes and trip patterns could weight nodes differently</li>
+<li><strong>Elevation</strong> — uphill walks are effectively longer; the distance metric could be adjusted</li>
+</ul>
+<hr>
+<h2 id="references">References</h2>
+<ul>
+<li>OpenStreetMap data via <a href="https://github.com/gboeing/osmnx">OSMnx</a></li>
+<li>K-medoids: <a href="https://github.com/kno10/python-kmedoids">kmedoids Python package</a> (FasterPAM algorithm)</li>
+<li>ILP solver: <a href="https://www.ibm.com/products/ilog-cplex-optimization-studio">IBM CPLEX</a> via <a href="https://github.com/coin-or/pulp">PuLP</a></li>
+<li>Pole of inaccessibility: <a href="https://shapely.readthedocs.io">Shapely <code>polylabel</code></a></li>
+</ul>
+
+</body>
+
+</html>
