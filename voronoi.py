@@ -73,9 +73,10 @@ def traitement(pts,polygon,end=False):
     return voronoi_list
 
 
-def dichotomie(polygon,debut,fin,objectif,n,nmax,facteur=1.25):
+def dichotomie(polygon,debut,fin,objectif,n,nmax,limit,facteur=1.25):
     nb_actuel =int((fin+debut)/2)
-    
+    if limit<=0:
+        raise ValueError("Recursion infinie")
     points = Random_Points_in_Polygon(polygon,nb_actuel)
     
     for i in range(n):
@@ -88,13 +89,13 @@ def dichotomie(polygon,debut,fin,objectif,n,nmax,facteur=1.25):
     m = sum(fd)/len(fd) #on estime avec les polygons intérieur, ceux de l'exterieur étants déformés
     print("nb_actuel =",nb_actuel,"debut=",debut,"fin=",fin,"m=",m*facteur)
     if debut == nmax or abs(fin-nmax)==1:
-        return dichotomie(polygon,nb_actuel,2*nmax,objectif,n,2*nmax)
+        return dichotomie(polygon,nb_actuel,2*nmax,objectif,n,limit-1,2*nmax)
     if (fin==debut) or abs(fin-debut)==1:
         return (m,nb_actuel,voronoi,points)
     if m>objectif:
-        return dichotomie(polygon,nb_actuel,fin,objectif,n,nmax)
+        return dichotomie(polygon,nb_actuel,fin,objectif,n,limit-1,nmax)
     elif m< objectif:
-        return dichotomie(polygon,debut,nb_actuel,objectif,n,nmax)
+        return dichotomie(polygon,debut,nb_actuel,objectif,n,limit-1,nmax)
     else :
         return (m,nb_actuel,voronoi,points)
     

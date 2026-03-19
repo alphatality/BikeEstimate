@@ -25,6 +25,7 @@ nb_iteration_kmedoids = 500
 nb_iteration_voronoi = 500
 solver = pulp.CPLEX_CMD(path=r'C:\Program Files\IBM\ILOG\CPLEX_Studio2211\cplex\bin\x64_win64\cplex.exe')
 
+
 def main(methode = "glouton",regenerate = True):
     if regenerate:
         data = get_data(city,crs)
@@ -50,7 +51,8 @@ def main(methode = "glouton",regenerate = True):
         case "kmedoids":
             g_plot,h,polygon,mat = load_data("paris",plot=True,igraph=True,polygone=True,matrix=True)
             t2 = t.process_time()
-            m,nb_station,res = dichotomie(mat,0, estimation(polygon,dist/facteur)*4, dist,nb_iteration_kmedoids,estimation(polygon,dist/facteur))
+            estimate = estimation(polygon,dist/facteur)
+            m,nb_station,res = dichotomie(mat,0, estimate*4, dist,nb_iteration_kmedoids,estimate*4,int(np.log(estimate*16)))
             print("durée processeur",t.process_time()-t2)
             medoids=res.medoids
             label =res.labels
@@ -65,7 +67,8 @@ def main(methode = "glouton",regenerate = True):
         case "voronoi":
             polygon = load_data(file_name,polygone=True)[0]
             t2 = t.process_time()
-            distance_max,nb_station,voronoi_list,voronoi_center = dichotomie(polygon,0,estimation(polygon,dist)*4,dist,nb_iteration_voronoi,estimation(polygon,dist)*4,facteur)
+            estimate = estimation(polygon,dist/facteur)
+            distance_max,nb_station,voronoi_list,voronoi_center = dichotomie(polygon,0,estimate*4,dist,nb_iteration_voronoi,estimate*4,int(np.log(estimate*16)),facteur)
             print("durée de calcul processeur:",(t.process_time()-t2))
             voronoi_int = [voronoi_list[j] for j in range(len(voronoi_list)) if not spl.dwithin(spl.LinearRing(polygon.exterior.coords),voronoi_list[j],dist/100)]
 
@@ -94,4 +97,5 @@ def main(methode = "glouton",regenerate = True):
             print("distance correcte:",correct_dist(stations,mat,clusters,0,dist))
 
 
-main("kmedoids",regenerate=False)
+main("voronoi",regenerate=False)
+#regenerate = True pour recalculer les données, False pour utiliser les données déjà calculées
