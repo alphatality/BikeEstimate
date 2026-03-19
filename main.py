@@ -17,13 +17,21 @@ city = "Strasbourg"
 file_name = clean_file_name(city)
 crs = "EPSG:2154"
 generate = True #choisis si on calcule tout le matrice de distance ou si on utilise celle déjà calculée
-dist = 400 #distance acceptable à marcher
-marge = 200 #marge acceptable sur la distance habituelle (pour la méthode gloutonnes)
+dist = 300 #distance acceptable à marcher
+marge = dist/2 #marge acceptable sur la distance habituelle (pour la méthode gloutonnes)
 facteur = 1.25 #facteur de surestimation de la distance pour les méthodes spatiales
 spatial_dist = dist/facteur
-nb_iteration_kmedoids = 500
-nb_iteration_voronoi = 500
+nb_iteration_kmedoids = 500 #nombre iteration sur la methode kmedoids, non sur la dichotomie, 
+nb_iteration_voronoi = 500 #nombre iteration sur la methode voronoi, non sur la dichotomie
 solver = pulp.CPLEX_CMD(path=r'C:\Program Files\IBM\ILOG\CPLEX_Studio2211\cplex\bin\x64_win64\cplex.exe')
+regenerate = True
+
+
+###################################
+
+methode = "glouton"
+
+##################################
 
 
 def main(methode = "glouton",regenerate = True):
@@ -97,5 +105,5 @@ def main(methode = "glouton",regenerate = True):
             print("distance correcte:",correct_dist(stations,mat,clusters,0,dist))
 
 
-main("voronoi",regenerate=False)
+main(methode = methode,regenerate=regenerate)
 #regenerate = True pour recalculer les données, False pour utiliser les données déjà calculées

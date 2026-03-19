@@ -56,6 +56,12 @@ return points, polygons
 
 **Key detail:** Standard Lloyd's algorithm only works on convex polygons (centroids may fall outside concave cells). The fix is to replace out-of-polygon centroids with the **pole of inaccessibility** (center of the largest inscribed circle).
 
+<p align="center">
+  <img src="images/voronoi_final.png" width="400"/>
+  <br/>
+  <em>The iteration give good results on complexes concaves figures</em>
+</p>
+
 The number of stations is found by **binary search** on cell size, targeting a radius of `dist / 1.25` to account for the detour factor.
 
 **Initial estimate:**
@@ -78,7 +84,14 @@ Starting from the city center, the algorithm expands concentrically:
 2. **Filter candidates** — from those candidates, pick a subset where each station is at distance ≥ 2d from the others.
 3. **Expand** — repeat from each newly chosen station, never revisiting a node.
 
-This runs in near-linear time relative to the graph size.
+This runs in O(|S²|) time.
+
+<p align="center">
+  <img src="images/glouton_1_13e.png" width="400"/>
+  <br/>
+  <em>Propagation of the algorithm from pink to light blue in Paris 13e</em>
+</p>
+
 
 #### 2b. K-Medoids
 
@@ -171,6 +184,34 @@ Tested on 6 zones of increasing size around Paris:
 | K-medoids | 0.980 | 0.991 | 0.992 | 0.993 | 0.995 | 0.992 |
 | **Exact** | **1.0** | **1.0** | **1.0** | ✗ | ✗ | ✗ |
 
+### What does it look like (Paris 13e as an example)
+<table align="center">
+  <tr>
+    <th align="center">Voronoï</th>
+    <th align="center">Glouton</th>
+  </tr>
+  <tr>
+    <td align="center"><img src="images/voronoi_13e.png" width="350"/></td>
+    <td align="center"><img src="images/glouton_2_13e.png"  width="350"/></td>
+  </tr>
+  <tr>
+    <td align="center"><em>53 stations — mean coverage 303 m</em></td>
+    <td align="center"><em>62 stations — mean coverage 301 m</em></td>
+  </tr>
+  <tr>
+    <th align="center">K-médoïdes</th>
+    <th align="center">Exact</th>
+  </tr>
+  <tr>
+    <td align="center"><img src="images/k_med_13e.png" width="350"/></td>
+    <td align="center"><img src="images/exact_13e.png"    width="350"/></td>
+  </tr>
+  <tr>
+    <td align="center"><em>58 stations — mean coverage 303 m</em></td>
+    <td align="center"><em>38 stations — mean coverage 375 m</em></td>
+  </tr>
+</table>
+
 ### Summary
 
 | Method | Speed | Station count | Coverage uniformity | Scalability |
@@ -199,50 +240,49 @@ pip install osmnx networkx igraph shapely numpy matplotlib kmedoids pulp colour
 ```python
 # main.py
 city = "Paris"          # Any city name recognized by OpenStreetMap
-dist = 400              # Max acceptable walking distance in meters
-marge = 200             # Tolerance for greedy method
+dist = 300              # Max acceptable walking distance in meters
+marge = dist/2            # Tolerance for greedy method
 methode = "glouton"     # "glouton" | "kmedoids" | "voronoi" | "exact"
 
-main(methode=methode, regenerate=True)
+main(methode = methode, regenerate=True)
 ```
 
-**First run** (`regenerate=True`) downloads the city graph from OpenStreetMap, processes it, and computes the full distance matrix — this can take several minutes for large cities. Subsequent runs with `regenerate=False` load cached data instantly.
+**First run** (`regenerate=True`) downloads the city graph from OpenStreetMap, processes it, and computes the full distance matrix (if `generate = True`) — this can take several minutes for large cities. Subsequent runs with `regenerate=False` load cached data instantly.
 
 ### Step by step
 
 **1. Download and prepare the graph**
 
 ```python
-from get_graph import get_data, treat_graph, save_data
-from utils.plotting_and_string_clean import clean_file_name
-
 city = "Paris, France"
 crs = "EPSG:2154"
-file_name = clean_file_name(city)
+generate = True
+regenerate = True
 
 data = get_data(city, crs)
-save_data(treat_graph(data[0], crs), data[1], file_name, generate=True)
+save_data(treat_graph(data[0], crs), data[1], file_name, generate=generate)
 ```
 
-**2. Run a method**
+**2. Load the data**
 
 ```python
-from get_graph import load_data
-from glouton_igraph import approx, indice
-import osmnx as ox, networkx as nx
-from shapely.ops import polylabel
+city = "Paris, France"
+g_plot,h,polygon,mat=load_data(file_name, plot = True,igraph=True,polygone=True,matrix=True)
+```
+g_plot is a NetWorkX graph used for plotting, h is the igraph equivalent used for computation, polygon is the outbounds of the city, matrix the distance of the every node to every node in the graph.
 
-data = load_data(file_name, plot=True, igraph=True, polygone=True, matrix=True)
-g_plot, h, polygon, mat = data
+**3. Run a method**
 
-seed_xy = polylabel(polygon)
-seed = ox.nearest_nodes(nx.MultiDiGraph(g_plot), seed_xy.x, seed_xy.y)
-
-stations = approx(h, seed, dist=400, tolerance=200)
-print(f"{len(stations)} stations placed")
+```python
+facteur = 1.25 #estimated factor between euclidian distance and real distance
+spatial_dist = dist/facteur
+nb_iteration_kmedoids = 500
+nb_iteration_voronoi = 500
+methode = "glouton"  # "glouton" | "kmedoids" | "voronoi" | "exact"
+main(methode = methode, regenerate)
 ```
 
-**3. Evaluate results**
+**4. Evaluate results**
 
 ```python
 from utils.stats import cluster, moyenne, ecart_type, correct_dist
@@ -252,7 +292,29 @@ moy, maxs = moyenne(clusters, mat, stations)
 
 print(f"Mean coverage:     {moy:.1f} m")
 print(f"Std deviation:     {ecart_type(moy, maxs):.1f} m")
-print(f"Coverage ratio:    {correct_dist(stations, mat, clusters, 0, 400):.3f}")
+print(f"Coverage ratio:    {correct_dist(stations, mat, clusters, 0, dist):.3f}")
+```
+**5. plotting graphs**
+This plot cluster per cluster
+
+```python
+colors= generate_random_color(len(stations),node_color="black") #methode from plotting_and_string_clean
+
+cluster_points = [
+    [[h.vs[j]['y'] for j in clusters[i]],
+     [h.vs[j]['x'] for j in clusters[i]]]
+    for i in range(len(clusters))
+]
+
+station_points = [[
+    [h.vs[i]['y'] for i in stations],
+    [h.vs[i]['x'] for i in stations]
+]]
+
+positions = cluster_points + station_points
+plotting(g_plot,positions,interactive = False,color = colors,titre=titre)
+plt.plot(*polygon.exterior.xy,"blue") #plot outbounds of the polygon
+plt.show()
 ```
 
 ### Choosing a solver
@@ -261,7 +323,7 @@ print(f"Coverage ratio:    {correct_dist(stations, mat, clusters, 0, 400):.3f}")
 |---|---|
 | Quick estimate, any city size | `glouton` |
 | Best coverage uniformity, city ≤ ~7k nodes | `kmedoids` |
-| Spatial overview without street graph | `voronoi` |
+| Spatial overview without reliable street graph | `voronoi` |
 | Provably optimal, small area only | `exact` |
 
 ---
